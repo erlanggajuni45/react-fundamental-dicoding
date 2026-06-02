@@ -18,14 +18,15 @@ class DetailPage extends React.Component {
     };
   }
   render() {
-    if (this.state.note === undefined) {
-      return <NotFoundPage />;
-    }
-    return (
+    const { note } = this.state;
+
+    return !note ? (
+      <NotFoundPage />
+    ) : (
       <div className='detail-page'>
-        <h2 className='detail-page__title'>{this.state.note.title}</h2>
-        <p className='detail-page__createdAt'>{showFormattedDate(this.state.note.createdAt)}</p>
-        <div className='detail-page__body'>{this.state.note.body}</div>
+        <h2 className='detail-page__title'>{note.title}</h2>
+        <p className='detail-page__createdAt'>{showFormattedDate(note.createdAt)}</p>
+        <div className='detail-page__body'>{note.body}</div>
       </div>
     );
   }
