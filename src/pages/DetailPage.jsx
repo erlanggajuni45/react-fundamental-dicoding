@@ -6,6 +6,7 @@ import NotFoundPage from './NotFoundPage';
 import PropTypes from 'prop-types';
 import ActionButtonContainer from '../components/ActionButtons';
 import { deleteNote, archiveNote, unarchiveNote } from '../utils/local-data';
+import parser from 'html-react-parser';
 
 function DetailPageWrapper() {
   const { id } = useParams();
@@ -53,7 +54,7 @@ class DetailPage extends React.Component {
       <div className='detail-page'>
         <h2 className='detail-page__title'>{note.title}</h2>
         <p className='detail-page__createdAt'>{showFormattedDate(note.createdAt)}</p>
-        <div className='detail-page__body'>{note.body}</div>
+        <div className='detail-page__body'>{parser(note.body)}</div>
 
         <ActionButtonContainer
           page='detail-page'
