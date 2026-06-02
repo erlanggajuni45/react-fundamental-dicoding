@@ -25,9 +25,43 @@ function HomeActionButton() {
   );
 }
 
-function ActionButtonContainer({ page, onAdd, onDelete, onArchive, onUnarchive }) {
-  return <div className={`${page}__action`}>{page === 'homepage' && <HomeActionButton />}</div>;
+function AddNoteActionButton({ onAdd }) {
+  return (
+    <button
+      className='action'
+      onClick={onAdd}
+    >
+      <svg
+        stroke='currentColor'
+        fill='currentColor'
+        stroke-width='0'
+        viewBox='0 0 24 24'
+        height='1em'
+        width='1em'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path
+          fill='none'
+          d='M0 0h24v24H0V0z'
+        ></path>
+        <path d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'></path>
+      </svg>
+    </button>
+  );
 }
+
+function ActionButtonContainer({ page, onAdd, onDelete, onArchive, onUnarchive }) {
+  return (
+    <div className={`${page}__action`}>
+      {page === 'homepage' && <HomeActionButton />}
+      {page === 'addnotepage' && <AddNoteActionButton onAdd={onAdd} />}
+    </div>
+  );
+}
+
+AddNoteActionButton.propTypes = {
+  onAdd: PropTypes.func.isRequired,
+};
 
 ActionButtonContainer.propTypes = {
   page: PropTypes.string.isRequired,
