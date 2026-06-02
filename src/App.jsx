@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
+import DetailPage from './pages/DetailPage';
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
           <Route
             path='/'
             element={<HomePage />}
+          />
+          <Route
+            path='/notes/:id'
+            element={<DetailPage />}
           />
         </Routes>
       </main>
