@@ -5,6 +5,7 @@ import NoteList from '../components/NoteList';
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
 import SearchNote from '../components/SearchNote';
+import ActionButtonContainer from '../components/ActionButtons';
 
 function HomePageWrapper({ archived }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,6 +36,20 @@ class HomePage extends React.Component {
     this.onKeywordChangeEventHandler = this.onKeywordChangeEventHandler.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.archived !== this.props.archived) {
+      this.setState({
+        notes: this.props.archived ? getArchivedNotes() : getActiveNotes(),
+      });
+    }
+
+    if (prevProps.defaultKeyword !== this.props.defaultKeyword) {
+      this.setState({
+        keyword: this.props.defaultKeyword || '',
+      });
+    }
+  }
+
   onKeywordChangeEventHandler(keyword) {
     this.setState(() => {
       return {
@@ -46,17 +61,20 @@ class HomePage extends React.Component {
   }
 
   render() {
-    const notes = this.state.notes;
-    return notes.length === 0 ? (
-      <NoteEmpty />
-    ) : (
+    const notes = this.state.notes.filter((note) => {
+      return note.title.toLowerCase().includes(this.state.keyword.toLowerCase());
+    });
+    return (
       <>
-        <h2>Catatan {this.props.archived ? 'Arsip' : 'Aktif'}</h2>
-        <SearchNote
-          onKeywordChange={this.onKeywordChangeEventHandler}
-          keyword={this.state.keyword}
-        />
-        <NoteList notes={notes} />
+        <div>
+          <h2>Catatan {this.props.archived ? 'Arsip' : 'Aktif'}</h2>
+          <SearchNote
+            onKeywordChange={this.onKeywordChangeEventHandler}
+            keyword={this.state.keyword}
+          />
+        </div>
+        {notes.length === 0 ? <NoteEmpty /> : <NoteList notes={notes} />}
+        {!this.props.archived && <ActionButtonContainer page='homepage' />}
       </>
     );
   }
