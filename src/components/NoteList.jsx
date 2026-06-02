@@ -1,6 +1,5 @@
 import NoteItem from './NoteItem';
 import PropTypes from 'prop-types';
-import parser from 'html-react-parser';
 
 function NoteList({ notes }) {
   return (
@@ -10,7 +9,7 @@ function NoteList({ notes }) {
           key={note.id}
           id={note.id}
           title={note.title}
-          body={parser(note.body)}
+          body={note.body}
           createdAt={note.createdAt}
           archived={note.archived}
         />

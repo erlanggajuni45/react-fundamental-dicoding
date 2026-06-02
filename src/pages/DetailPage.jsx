@@ -70,7 +70,7 @@ class DetailPage extends React.Component {
 
 DetailPage.propTypes = {
   id: PropTypes.string.isRequired,
-  archived: PropTypes.bool.isRequired,
+  archived: PropTypes.bool,
   onDelete: PropTypes.func.isRequired,
   onArchive: PropTypes.func.isRequired,
   onUnarchive: PropTypes.func.isRequired,
