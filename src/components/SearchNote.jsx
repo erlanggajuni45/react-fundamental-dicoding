@@ -3,7 +3,7 @@ function SearchNote({ keyword, onKeywordChange }) {
     <div className='search-bar'>
       <input
         type='text'
-        placeholder='Cari catatan...'
+        placeholder='Cari berdasarkan judul...'
         value={keyword}
         onChange={(event) => onKeywordChange(event.target.value)}
       />
