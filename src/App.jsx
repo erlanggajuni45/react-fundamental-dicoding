@@ -26,6 +26,10 @@ function App() {
             element={<HomePage />}
           />
           <Route
+            path='/notes/new'
+            element={<h2>Halaman Tambah Catatan</h2>}
+          />
+          <Route
             path='/notes/:id'
             element={<DetailPage />}
           />
