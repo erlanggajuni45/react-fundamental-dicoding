@@ -1,13 +1,39 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getNote } from '../utils/local-data';
 import { showFormattedDate } from '../utils';
 import NotFoundPage from './NotFoundPage';
 import PropTypes from 'prop-types';
+import ActionButtonContainer from '../components/ActionButtons';
+import { deleteNote, archiveNote, unarchiveNote } from '../utils/local-data';
 
 function DetailPageWrapper() {
   const { id } = useParams();
-  return <DetailPage id={id} />;
+  const navigate = useNavigate();
+
+  function onDeleteEventHandler() {
+    deleteNote(id);
+    navigate('/');
+  }
+
+  function onArchiveEventHandler() {
+    archiveNote(id);
+    navigate('/');
+  }
+
+  function onUnarchiveEventHandler() {
+    unarchiveNote(id);
+    navigate('/');
+  }
+
+  return (
+    <DetailPage
+      id={id}
+      onDelete={onDeleteEventHandler}
+      onArchive={onArchiveEventHandler}
+      onUnarchive={onUnarchiveEventHandler}
+    />
+  );
 }
 
 class DetailPage extends React.Component {
@@ -28,6 +54,14 @@ class DetailPage extends React.Component {
         <h2 className='detail-page__title'>{note.title}</h2>
         <p className='detail-page__createdAt'>{showFormattedDate(note.createdAt)}</p>
         <div className='detail-page__body'>{note.body}</div>
+
+        <ActionButtonContainer
+          page='detail-page'
+          archived={note.archived}
+          onDelete={this.props.onDelete}
+          onArchive={this.props.onArchive}
+          onUnarchive={this.props.onUnarchive}
+        />
       </div>
     );
   }
@@ -35,6 +69,10 @@ class DetailPage extends React.Component {
 
 DetailPage.propTypes = {
   id: PropTypes.string.isRequired,
+  archived: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onArchive: PropTypes.func.isRequired,
+  onUnarchive: PropTypes.func.isRequired,
 };
 
 export default DetailPageWrapper;
