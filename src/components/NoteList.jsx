@@ -14,7 +14,7 @@ function NoteList({ notes }) {
           archived={note.archived}
         />
       ))}
-      <ActionButtonContainer page='home' />
+      <ActionButtonContainer page='homepage' />
     </div>
   );
 }

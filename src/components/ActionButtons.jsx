@@ -26,7 +26,7 @@ function HomeActionButton() {
 }
 
 function ActionButtonContainer({ page, onAdd, onDelete, onArchive, onUnarchive }) {
-  return <div className={`${page}-page__action`}>{page === 'home' && <HomeActionButton />}</div>;
+  return <div className={`${page}__action`}>{page === 'homepage' && <HomeActionButton />}</div>;
 }
 
 ActionButtonContainer.propTypes = {
