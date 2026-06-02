@@ -1,6 +1,6 @@
 import NoteItem from './NoteItem';
 import PropTypes from 'prop-types';
-
+import ActionButtonContainer from './ActionButtons';
 function NoteList({ notes }) {
   return (
     <div className='notes-list'>
@@ -14,6 +14,7 @@ function NoteList({ notes }) {
           archived={note.archived}
         />
       ))}
+      <ActionButtonContainer page='home' />
     </div>
   );
 }
