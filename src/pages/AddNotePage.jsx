@@ -46,6 +46,10 @@ class AddNotePage extends React.Component {
 
   onAddNoteEventHandler() {
     const { title, body } = this.state;
+    if (!title.trim() || !body.trim()) {
+      alert('Title dan body tidak boleh kosong!');
+      return;
+    }
     this.props.onAddNote({ title, body });
   }
 
