@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function SearchNote({ keyword, onKeywordChange }) {
   return (
     <div className='search-bar'>
@@ -10,5 +12,10 @@ function SearchNote({ keyword, onKeywordChange }) {
     </div>
   );
 }
+
+SearchNote.propTypes = {
+  keyword: PropTypes.string.isRequired,
+  onKeywordChange: PropTypes.func.isRequired,
+};
 
 export default SearchNote;
