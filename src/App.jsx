@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={<h2>Halaman Beranda</h2>}
+            element={<HomePage />}
           />
         </Routes>
       </main>
