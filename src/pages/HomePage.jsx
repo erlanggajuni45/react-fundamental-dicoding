@@ -1,5 +1,6 @@
 import React from 'react';
-import { getAllNotes } from '../utils/local-data';
+import { getActiveNotes } from '../utils/local-data';
+import NoteEmpty from '../components/NoteEmpty';
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class HomePage extends React.Component {
   }
 
   render() {
-    return <h2>Halaman Beranda nyeneyneeye</h2>;
+    const { notes } = this.state;
+    return notes.length === 0 ? <NoteEmpty /> : <h2>HAI</h2>;
   }
 }
 

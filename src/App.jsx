@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
-import NoteList from './pages/NoteList';
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={<NoteList />}
+            element={<HomePage />}
           />
         </Routes>
       </main>
