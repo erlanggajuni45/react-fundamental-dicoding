@@ -1,0 +1,40 @@
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
+function HomeActionButton() {
+  return (
+    <Link to='/notes/new'>
+      <button className='action'>
+        <svg
+          stroke='currentColor'
+          fill='currentColor'
+          stroke-width='0'
+          viewBox='0 0 24 24'
+          height='1em'
+          width='1em'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            fill='none'
+            d='M0 0h24v24H0V0z'
+          ></path>
+          <path d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'></path>
+        </svg>
+      </button>
+    </Link>
+  );
+}
+
+function ActionButtonContainer({ page, onAdd, onDelete, onArchive, onUnarchive }) {
+  return <div className={`${page}-page__action`}>{page === 'home' && <HomeActionButton />}</div>;
+}
+
+ActionButtonContainer.propTypes = {
+  page: PropTypes.string.isRequired,
+  onAdd: PropTypes.func,
+  onDelete: PropTypes.func,
+  onArchive: PropTypes.func,
+  onUnarchive: PropTypes.func,
+};
+
+export default ActionButtonContainer;
