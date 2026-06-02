@@ -27,6 +27,10 @@ function App() {
             element={<HomePage />}
           />
           <Route
+            path='/archives'
+            element={<HomePage archived />}
+          />
+          <Route
             path='/notes/new'
             element={<AddNotePage />}
           />
