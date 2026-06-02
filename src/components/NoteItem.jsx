@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { showFormattedDate } from '../utils';
 import { Link } from 'react-router-dom';
 
-export default function NoteItem({ id, title, body, createdAt, archived }) {
+function NoteItem({ id, title, body, createdAt, archived }) {
   return (
     <div className='note-item'>
       <h3 className='note-item__title'>
@@ -21,3 +21,5 @@ NoteItem.propTypes = {
   createdAt: PropTypes.string.isRequired,
   archived: PropTypes.bool.isRequired,
 };
+
+export default NoteItem;

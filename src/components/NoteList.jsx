@@ -1,7 +1,7 @@
 import NoteItem from './NoteItem';
 import PropTypes from 'prop-types';
 
-export default function NoteList({ notes }) {
+function NoteList({ notes }) {
   return (
     <div className='notes-list'>
       {notes.map((note) => (
@@ -29,3 +29,5 @@ NoteList.propTypes = {
     }),
   ).isRequired,
 };
+
+export default NoteList;
