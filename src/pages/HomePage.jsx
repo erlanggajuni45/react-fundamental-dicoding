@@ -1,20 +1,16 @@
 import React from 'react';
-import { getActiveNotes } from '../utils/local-data';
+import { getActiveNotes, getArchivedNotes } from '../utils/local-data';
 import NoteEmpty from '../components/NoteEmpty';
 import NoteList from '../components/NoteList';
+import PropTypes from 'prop-types';
 
-class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      notes: getActiveNotes(),
-    };
-  }
-
-  render() {
-    const { notes } = this.state;
-    return notes.length === 0 ? <NoteEmpty /> : <NoteList notes={notes} />;
-  }
+function HomePage({ archived }) {
+  const notes = archived ? getArchivedNotes() : getActiveNotes();
+  return notes.length === 0 ? <NoteEmpty /> : <NoteList notes={notes} />;
 }
+
+HomePage.propTypes = {
+  archived: PropTypes.bool,
+};
 
 export default HomePage;
