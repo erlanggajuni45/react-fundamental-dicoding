@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import DetailPage from './pages/DetailPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
           <Route
             path='/notes/:id'
             element={<DetailPage />}
+          />
+          <Route
+            path='*'
+            element={<NotFoundPage />}
           />
         </Routes>
       </main>
