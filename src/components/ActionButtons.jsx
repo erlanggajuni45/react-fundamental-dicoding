@@ -54,7 +54,7 @@ function ActionButtonContainer({ page, onAdd, onDelete, onArchive, onUnarchive }
   return (
     <div className={`${page}__action`}>
       {page === 'homepage' && <HomeActionButton />}
-      {page === 'addnotepage' && <AddNoteActionButton onAdd={onAdd} />}
+      {page === 'add-new-page' && <AddNoteActionButton onAdd={onAdd} />}
     </div>
   );
 }
