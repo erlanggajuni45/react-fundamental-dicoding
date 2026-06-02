@@ -1,6 +1,18 @@
 import React from 'react';
 import ActionButtonContainer from '../components/ActionButtons';
 import { addNote } from '../utils/local-data';
+import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+function AddNotePageWrapper() {
+  const navigate = useNavigate();
+
+  function onAddNoteEventHandler(note) {
+    addNote(note);
+    navigate('/');
+  }
+  return <AddNotePage onAddNote={onAddNoteEventHandler} />;
+}
 
 class AddNotePage extends React.Component {
   constructor(props) {
@@ -34,7 +46,7 @@ class AddNotePage extends React.Component {
 
   onAddNoteEventHandler() {
     const { title, body } = this.state;
-    addNote({ title, body });
+    this.props.onAddNote({ title, body });
   }
 
   render() {
@@ -63,4 +75,8 @@ class AddNotePage extends React.Component {
   }
 }
 
-export default AddNotePage;
+AddNotePage.propTypes = {
+  onAddNote: PropTypes.func.isRequired,
+};
+
+export default AddNotePageWrapper;
