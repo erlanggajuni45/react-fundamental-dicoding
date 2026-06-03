@@ -18,7 +18,9 @@ function LoginPage() {
   const onSubmitEventHandler = async (event) => {
     event.preventDefault();
     if (!email.trim() || !password.trim()) {
-      alert('Email dan password harus diisi!');
+      alert(
+        locale === 'id' ? 'Email dan password harus diisi!' : 'Email and password must be filled!',
+      );
       return;
     }
 
@@ -31,11 +33,8 @@ function LoginPage() {
         const { data: user } = await getUserLogged();
         setAuthedUser(user);
         navigate('/');
-      } else {
-        throw new Error('Login gagal! Periksa kembali email dan password Anda.');
       }
     } catch (error) {
-      alert(error.message);
     } finally {
       setIsLoading(false);
     }
