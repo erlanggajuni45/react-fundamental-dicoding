@@ -31,6 +31,7 @@ class HomePage extends React.Component {
     this.state = {
       notes: [],
       keyword: props.defaultKeyword || '',
+      isLoading: true,
     };
 
     this.onKeywordChangeEventHandler = this.onKeywordChangeEventHandler.bind(this);
@@ -40,13 +41,21 @@ class HomePage extends React.Component {
     const { data } = this.props.archived ? await getArchivedNotes() : await getActiveNotes();
     this.setState({
       notes: data,
+      isLoading: false,
     });
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     if (prevProps.archived !== this.props.archived) {
       this.setState({
-        notes: this.props.archived ? getArchivedNotes() : getActiveNotes(),
+        isLoading: true,
+      });
+
+      const { data } = this.props.archived ? await getArchivedNotes() : await getActiveNotes();
+
+      this.setState({
+        notes: data,
+        isLoading: false,
       });
     }
 
@@ -78,7 +87,13 @@ class HomePage extends React.Component {
             keyword={this.state.keyword}
           />
         </div>
-        {notes.length === 0 ? <NoteEmpty /> : <NoteList notes={notes} />}
+        {this.state.isLoading ? (
+          <p className='loading'>Loading...</p>
+        ) : notes.length === 0 ? (
+          <NoteEmpty />
+        ) : (
+          <NoteList notes={notes} />
+        )}
         {!this.props.archived && <ActionButtonContainer page='homepage' />}
       </>
     );
