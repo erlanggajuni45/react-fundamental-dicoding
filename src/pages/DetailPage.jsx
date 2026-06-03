@@ -1,11 +1,10 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getNote } from '../utils/local-data';
 import { showFormattedDate } from '../utils';
 import NotFoundPage from './NotFoundPage';
 import PropTypes from 'prop-types';
 import ActionButtonContainer from '../components/ActionButtons';
-import { deleteNote, archiveNote, unarchiveNote } from '../utils/local-data';
+import { getNote, deleteNote, archiveNote, unarchiveNote } from '../utils/network-data';
 import parser from 'html-react-parser';
 
 function DetailPageWrapper() {
@@ -42,11 +41,27 @@ class DetailPage extends React.Component {
     super(props);
 
     this.state = {
-      note: getNote(props.id),
+      note: null,
+      isLoading: true,
     };
   }
+
+  async componentDidMount() {
+    const { id } = this.props;
+    const { data } = await getNote(id);
+    this.setState({
+      note: data,
+      isLoading: false,
+    });
+  }
+
   render() {
-    const { note } = this.state;
+    const { note, isLoading } = this.state;
+
+    if (isLoading) {
+      // TODO: buat komponen Loading
+      return <p className='loading'>Loading...</p>;
+    }
 
     return !note ? (
       <NotFoundPage />
