@@ -1,9 +1,23 @@
 function LoginPage() {
   return (
-    <div className='input-login'>
-      <h2>Login Page</h2>
-      <p>Halaman login akan segera hadir!</p>
-    </div>
+    <>
+      <h2>Yuk, login untuk menggunakan aplikasi.</h2>
+      <form className='input-login'>
+        <label htmlFor='email'>Email</label>
+        <input
+          type='email'
+          id='email'
+          name='email'
+        />
+        <label htmlFor='password'>Password</label>
+        <input
+          type='password'
+          id='password'
+          name='password'
+        />
+        <button type='submit'>Login</button>
+      </form>
+    </>
   );
 }
 
