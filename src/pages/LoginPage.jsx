@@ -1,12 +1,17 @@
 import useInput from '../hooks/useInput';
 import { Link, useNavigate } from 'react-router-dom';
 import { login, putAccessToken } from '../utils/network-data';
+import { useContext } from 'react';
+import AuthContext from '../context/authContext';
+import { getUserLogged } from '../utils/network-data';
 
 function LoginPage() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
+
+  const { setAuthedUser } = useContext(AuthContext);
 
   const onSubmitEventHandler = async (event) => {
     event.preventDefault();
@@ -19,6 +24,8 @@ function LoginPage() {
 
     if (!error) {
       putAccessToken(data.accessToken);
+      const { data: user } = await getUserLogged();
+      setAuthedUser(user);
       navigate('/');
     } else {
       alert('Login gagal! Periksa kembali email dan password Anda.');
