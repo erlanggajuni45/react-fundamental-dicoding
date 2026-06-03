@@ -1,6 +1,6 @@
 import React from 'react';
 import ActionButtonContainer from '../components/ActionButtons';
-import { addNote } from '../utils/local-data';
+import { addNote } from '../utils/network-data';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
