@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { getActiveNotes, getArchivedNotes } from '../utils/network-data';
 import NoteEmpty from '../components/NoteEmpty';
 import NoteList from '../components/NoteList';
@@ -6,9 +6,13 @@ import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
 import SearchNote from '../components/SearchNote';
 import ActionButtonContainer from '../components/ActionButtons';
+import GlobalContext from '../context/GlobalContext';
+import Loader from '../components/Loader';
 
 function HomePageWrapper({ archived }) {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const { theme } = useContext(GlobalContext);
 
   const keyword = searchParams.get('keyword');
 
@@ -21,6 +25,7 @@ function HomePageWrapper({ archived }) {
       archived={archived}
       defaultKeyword={keyword}
       onKeywordChange={changeSearchParams}
+      theme={theme}
     />
   );
 }
@@ -88,7 +93,7 @@ class HomePage extends React.Component {
           />
         </div>
         {this.state.isLoading ? (
-          <p className='loading'>Loading...</p>
+          <Loader theme={this.props.theme} />
         ) : notes.length === 0 ? (
           <NoteEmpty />
         ) : (
@@ -104,6 +109,7 @@ HomePage.propTypes = {
   archived: PropTypes.bool,
   defaultKeyword: PropTypes.string,
   onKeywordChange: PropTypes.func.isRequired,
+  theme: PropTypes.oneOf(['light', 'dark']).isRequired,
 };
 
 export default HomePageWrapper;

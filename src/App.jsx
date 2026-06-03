@@ -9,6 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import GlobalContext from './context/GlobalContext';
 import Navigation from './components/Navigation';
+import Loader from './components/Loader';
 
 function App() {
   const [authedUser, setAuthedUser] = useState(null);
@@ -43,8 +44,9 @@ function App() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  // TODO: ADD LOADING INDICATOR
-  return initializing ? null : (
+  return initializing ? (
+    <Loader theme={theme} />
+  ) : (
     <GlobalContext.Provider value={globalContextValue}>
       <div className='app-container'>
         <Navigation />

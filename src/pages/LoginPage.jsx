@@ -1,17 +1,19 @@
 import useInput from '../hooks/useInput';
 import { Link, useNavigate } from 'react-router-dom';
 import { login, putAccessToken } from '../utils/network-data';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import GlobalContext from '../context/GlobalContext';
 import { getUserLogged } from '../utils/network-data';
+import Loader from '../components/Loader';
 
 function LoginPage() {
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
 
-  const { setAuthedUser } = useContext(GlobalContext);
+  const { setAuthedUser, theme } = useContext(GlobalContext);
 
   const onSubmitEventHandler = async (event) => {
     event.preventDefault();
@@ -20,17 +22,28 @@ function LoginPage() {
       return;
     }
 
-    const { error, data } = await login({ email, password });
+    setIsLoading(true);
+    try {
+      const { error, data } = await login({ email, password });
 
-    if (!error) {
-      putAccessToken(data.accessToken);
-      const { data: user } = await getUserLogged();
-      setAuthedUser(user);
-      navigate('/');
-    } else {
-      alert('Login gagal! Periksa kembali email dan password Anda.');
+      if (!error) {
+        putAccessToken(data.accessToken);
+        const { data: user } = await getUserLogged();
+        setAuthedUser(user);
+        navigate('/');
+      } else {
+        throw new Error('Login gagal! Periksa kembali email dan password Anda.');
+      }
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return <Loader theme={theme} />;
+  }
 
   return (
     <>
@@ -55,7 +68,12 @@ function LoginPage() {
           value={password}
           onChange={setPassword}
         />
-        <button type='submit'>Login</button>
+        <button
+          type='submit'
+          disabled={isLoading}
+        >
+          Login
+        </button>
       </form>
       <p>
         Belum punya akun? <Link to='/register'>Daftar di sini</Link>

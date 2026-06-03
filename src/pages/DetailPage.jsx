@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { showFormattedDate } from '../utils';
 import NotFoundPage from './NotFoundPage';
@@ -6,10 +6,13 @@ import PropTypes from 'prop-types';
 import ActionButtonContainer from '../components/ActionButtons';
 import { getNote, deleteNote, archiveNote, unarchiveNote } from '../utils/network-data';
 import parser from 'html-react-parser';
+import GlobalContext from '../context/GlobalContext';
+import Loader from '../components/Loader';
 
 function DetailPageWrapper() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { theme } = useContext(GlobalContext);
 
   async function onDeleteEventHandler() {
     await deleteNote(id);
@@ -32,6 +35,7 @@ function DetailPageWrapper() {
       onDelete={onDeleteEventHandler}
       onArchive={onArchiveEventHandler}
       onUnarchive={onUnarchiveEventHandler}
+      theme={theme}
     />
   );
 }
@@ -59,8 +63,7 @@ class DetailPage extends React.Component {
     const { note, isLoading } = this.state;
 
     if (isLoading) {
-      // TODO: buat komponen Loading
-      return <p className='loading'>Loading...</p>;
+      return <Loader theme={this.props.theme} />;
     }
 
     return !note ? (
@@ -89,6 +92,7 @@ DetailPage.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onArchive: PropTypes.func.isRequired,
   onUnarchive: PropTypes.func.isRequired,
+  theme: PropTypes.oneOf(['light', 'dark']).isRequired,
 };
 
 export default DetailPageWrapper;
