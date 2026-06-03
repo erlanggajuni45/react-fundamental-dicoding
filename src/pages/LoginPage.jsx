@@ -2,7 +2,7 @@ import useInput from '../hooks/useInput';
 import { Link, useNavigate } from 'react-router-dom';
 import { login, putAccessToken } from '../utils/network-data';
 import { useContext } from 'react';
-import AuthContext from '../context/authContext';
+import GlobalContext from '../context/GlobalContext';
 import { getUserLogged } from '../utils/network-data';
 
 function LoginPage() {
@@ -11,7 +11,7 @@ function LoginPage() {
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
 
-  const { setAuthedUser } = useContext(AuthContext);
+  const { setAuthedUser } = useContext(GlobalContext);
 
   const onSubmitEventHandler = async (event) => {
     event.preventDefault();
