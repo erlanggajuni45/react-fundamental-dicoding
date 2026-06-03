@@ -1,6 +1,7 @@
 import { Link, Route, Routes } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { getUserLogged } from './utils/network-data';
+import { LogOut } from 'lucide-react';
 import HomePage from './pages/HomePage';
 import DetailPage from './pages/DetailPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -11,6 +12,11 @@ import LoginPage from './pages/LoginPage';
 function App() {
   const [authedUser, setAuthedUser] = useState(null);
   const [initializing, setInitializing] = useState(true);
+
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    setAuthedUser(null);
+  };
 
   useEffect(() => {
     async function fetchAuthedUser() {
@@ -32,9 +38,19 @@ function App() {
         <div className='navigation'>
           <ul>
             {authedUser && (
-              <li>
-                <Link to='/archives'>Arsip</Link>
-              </li>
+              <>
+                <li>
+                  <Link to='/archives'>Arsip</Link>
+                </li>
+                <li>
+                  <button
+                    className='button-logout'
+                    onClick={logout}
+                  >
+                    <LogOut /> {authedUser.name}
+                  </button>
+                </li>
+              </>
             )}
           </ul>
         </div>
