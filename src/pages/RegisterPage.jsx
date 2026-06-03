@@ -1,8 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import { register } from '../utils/network-data';
+import { useContext } from 'react';
+import GlobalContext from '../context/GlobalContext';
 
 function RegisterPage() {
+  const { locale } = useContext(GlobalContext);
   const navigate = useNavigate();
 
   const [name, onNameChange] = useInput('');
@@ -13,37 +16,53 @@ function RegisterPage() {
   const onSubmitEventHandler = async (event) => {
     event.preventDefault();
     if (!name.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
-      alert('Semua field harus diisi!');
+      alert(locale === 'id' ? 'Semua field harus diisi!' : 'All fields must be filled!');
       return;
     }
 
     if (password.length < 6) {
-      alert('Password harus memiliki panjang minimal 6 karakter!');
+      alert(
+        locale === 'id'
+          ? 'Password harus memiliki panjang minimal 6 karakter!'
+          : 'Password must have a minimum length of 6 characters!',
+      );
       return;
     }
 
     if (password !== confirmPassword) {
-      alert('Password dan konfirmasi password tidak cocok!');
+      alert(
+        locale === 'id'
+          ? 'Password dan konfirmasi password tidak cocok!'
+          : 'Password and confirm password do not match!',
+      );
       return;
     }
 
     const { error } = await register({ name, email, password });
 
     if (!error) {
-      alert('Registrasi berhasil! Silakan login untuk melanjutkan.');
+      alert(
+        locale === 'id'
+          ? 'Registrasi berhasil! Silakan login untuk melanjutkan.'
+          : 'Registration successful! Please login to continue.',
+      );
       navigate('/');
     }
   };
 
   return (
     <div>
-      <h2>Isi form untuk mendaftar akun.</h2>
+      <h2>
+        {locale === 'id'
+          ? 'Isi form untuk mendaftar akun.'
+          : 'Fill out the form to register an account.'}
+      </h2>
 
       <form
         className='input-register'
         onSubmit={onSubmitEventHandler}
       >
-        <label htmlFor='name'>Nama</label>
+        <label htmlFor='name'>{locale === 'id' ? 'Nama' : 'Name'}</label>
         <input
           type='text'
           id='name'
@@ -51,7 +70,7 @@ function RegisterPage() {
           value={name}
           onChange={onNameChange}
         />
-        <label htmlFor='email'>Email</label>
+        <label htmlFor='email'>{locale === 'id' ? 'Email' : 'Email'}</label>
         <input
           type='email'
           id='email'
@@ -59,7 +78,7 @@ function RegisterPage() {
           value={email}
           onChange={onEmailChange}
         />
-        <label htmlFor='password'>Password</label>
+        <label htmlFor='password'>{locale === 'id' ? 'Password' : 'Password'}</label>
         <input
           type='password'
           id='password'
@@ -67,7 +86,9 @@ function RegisterPage() {
           value={password}
           onChange={onPasswordChange}
         />
-        <label htmlFor='confirmPassword'>Konfirmasi Password</label>
+        <label htmlFor='confirmPassword'>
+          {locale === 'id' ? 'Konfirmasi Password' : 'Confirm Password'}
+        </label>
         <input
           type='password'
           id='confirmPassword'
@@ -75,11 +96,12 @@ function RegisterPage() {
           value={confirmPassword}
           onChange={onConfirmPasswordChange}
         />
-        <button type='submit'>Daftar</button>
+        <button type='submit'>{locale === 'id' ? 'Daftar' : 'Register'}</button>
       </form>
 
       <p>
-        Sudah punya akun? <Link to='/login'>Login di sini</Link>
+        {locale === 'id' ? 'Sudah punya akun? ' : 'Already have an account? '}
+        <Link to='/login'>{locale === 'id' ? 'Login di sini' : 'Login here'}</Link>
       </p>
     </div>
   );
