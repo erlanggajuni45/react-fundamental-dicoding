@@ -1,7 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
+import { register } from '../utils/network-data';
 
 function RegisterPage() {
+  const navigate = useNavigate();
+
   const [name, onNameChange] = useInput('');
   const [email, onEmailChange] = useInput('');
   const [password, onPasswordChange] = useInput('');
@@ -23,13 +26,23 @@ function RegisterPage() {
       alert('Password dan konfirmasi password tidak cocok!');
       return;
     }
+
+    const { error } = await register({ name, email, password });
+
+    if (!error) {
+      alert('Registrasi berhasil! Silakan login untuk melanjutkan.');
+      navigate('/');
+    }
   };
 
   return (
     <div>
       <h2>Isi form untuk mendaftar akun.</h2>
 
-      <form className='input-register'>
+      <form
+        className='input-register'
+        onSubmit={onSubmitEventHandler}
+      >
         <label htmlFor='name'>Nama</label>
         <input
           type='text'
