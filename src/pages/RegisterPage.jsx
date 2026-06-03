@@ -7,6 +7,24 @@ function RegisterPage() {
   const [password, onPasswordChange] = useInput('');
   const [confirmPassword, onConfirmPasswordChange] = useInput('');
 
+  const onSubmitEventHandler = async (event) => {
+    event.preventDefault();
+    if (!name.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+      alert('Semua field harus diisi!');
+      return;
+    }
+
+    if (password.length < 6) {
+      alert('Password harus memiliki panjang minimal 6 karakter!');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert('Password dan konfirmasi password tidak cocok!');
+      return;
+    }
+  };
+
   return (
     <div>
       <h2>Isi form untuk mendaftar akun.</h2>
