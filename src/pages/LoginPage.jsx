@@ -13,7 +13,7 @@ function LoginPage() {
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
 
-  const { setAuthedUser, theme } = useContext(GlobalContext);
+  const { setAuthedUser, theme, locale } = useContext(GlobalContext);
 
   const onSubmitEventHandler = async (event) => {
     event.preventDefault();
@@ -47,7 +47,11 @@ function LoginPage() {
 
   return (
     <>
-      <h2>Yuk, login untuk menggunakan aplikasi.</h2>
+      <h2>
+        {locale === 'id'
+          ? 'Yuk, login untuk menggunakan aplikasi.'
+          : "Let's login to use the application."}
+      </h2>
       <form
         className='input-login'
         onSubmit={onSubmitEventHandler}
@@ -76,7 +80,8 @@ function LoginPage() {
         </button>
       </form>
       <p>
-        Belum punya akun? <Link to='/register'>Daftar di sini</Link>
+        {locale === 'id' ? 'Belum punya akun?' : "Don't have an account?"}{' '}
+        <Link to='/register'>{locale === 'id' ? 'Daftar di sini' : 'Sign up here'}</Link>
       </p>
     </>
   );
