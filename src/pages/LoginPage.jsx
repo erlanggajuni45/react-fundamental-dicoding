@@ -19,7 +19,6 @@ function LoginPage() {
 
     if (!error) {
       putAccessToken(data.accessToken);
-      alert('Login berhasil!');
       navigate('/');
     } else {
       alert('Login gagal! Periksa kembali email dan password Anda.');

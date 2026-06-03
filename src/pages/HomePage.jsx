@@ -1,5 +1,5 @@
 import React from 'react';
-import { getActiveNotes, getArchivedNotes } from '../utils/local-data';
+import { getActiveNotes, getArchivedNotes } from '../utils/network-data';
 import NoteEmpty from '../components/NoteEmpty';
 import NoteList from '../components/NoteList';
 import PropTypes from 'prop-types';
@@ -29,11 +29,18 @@ class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notes: this.props.archived ? getArchivedNotes() : getActiveNotes(),
+      notes: [],
       keyword: props.defaultKeyword || '',
     };
 
     this.onKeywordChangeEventHandler = this.onKeywordChangeEventHandler.bind(this);
+  }
+
+  async componentDidMount() {
+    const { data } = this.props.archived ? await getArchivedNotes() : await getActiveNotes();
+    this.setState({
+      notes: data,
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -51,10 +58,8 @@ class HomePage extends React.Component {
   }
 
   onKeywordChangeEventHandler(keyword) {
-    this.setState(() => {
-      return {
-        keyword,
-      };
+    this.setState({
+      keyword,
     });
 
     this.props.onKeywordChange(keyword);
