@@ -1,7 +1,6 @@
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import React, { useState, useEffect, useMemo } from 'react';
 import { getUserLogged } from './utils/network-data';
-import { LogOut } from 'lucide-react';
 import HomePage from './pages/HomePage';
 import DetailPage from './pages/DetailPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -9,22 +8,21 @@ import AddNotePage from './pages/AddNotePage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import GlobalContext from './context/GlobalContext';
+import Navigation from './components/Navigation';
 
 function App() {
   const [authedUser, setAuthedUser] = useState(null);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [initializing, setInitializing] = useState(true);
 
   const globalContextValue = useMemo(() => {
     return {
       authedUser,
       setAuthedUser,
+      theme,
+      setTheme,
     };
-  }, [authedUser]);
-
-  const logout = () => {
-    localStorage.removeItem('accessToken');
-    setAuthedUser(null);
-  };
+  }, [authedUser, theme]);
 
   useEffect(() => {
     async function fetchAuthedUser() {
@@ -45,30 +43,7 @@ function App() {
   return initializing ? null : (
     <GlobalContext.Provider value={globalContextValue}>
       <div className='app-container'>
-        <header>
-          <h1>
-            <Link to='/'>Aplikasi Catatan</Link>
-          </h1>
-          <div className='navigation'>
-            <ul>
-              {authedUser && (
-                <>
-                  <li>
-                    <Link to='/archives'>Arsip</Link>
-                  </li>
-                  <li>
-                    <button
-                      className='button-logout'
-                      onClick={logout}
-                    >
-                      <LogOut /> {authedUser.name}
-                    </button>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
-        </header>
+        <Navigation />
         <main>
           <Routes>
             {!authedUser ? (
