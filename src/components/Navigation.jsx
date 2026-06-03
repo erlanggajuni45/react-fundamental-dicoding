@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import GlobalContext from '../context/GlobalContext';
 
 function Navigation() {
-  const { authedUser, setAuthedUser, theme, setTheme, setLocale } = useContext(GlobalContext);
+  const { authedUser, setAuthedUser, theme, setTheme, setLocale, locale } =
+    useContext(GlobalContext);
 
   const logout = () => {
     localStorage.removeItem('accessToken');
@@ -30,7 +31,7 @@ function Navigation() {
   return (
     <header>
       <h1>
-        <Link to='/'>Aplikasi Catatan</Link>
+        <Link to='/'>{locale === 'id' ? 'Aplikasi Catatan' : 'Notes App'}</Link>
       </h1>
 
       <nav className='navigation'>
@@ -55,7 +56,7 @@ function Navigation() {
           {authedUser && (
             <>
               <li>
-                <Link to='/archives'>Arsip</Link>
+                <Link to='/archives'>{locale === 'id' ? 'Terarsip' : 'Archived'}</Link>
               </li>
               <li>
                 <button
