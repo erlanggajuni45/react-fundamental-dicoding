@@ -15,6 +15,7 @@ function App() {
   const [authedUser, setAuthedUser] = useState(null);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [initializing, setInitializing] = useState(true);
+  const [locale, setLocale] = useState(localStorage.getItem('locale') || 'id');
 
   const globalContextValue = useMemo(() => {
     return {
@@ -22,8 +23,10 @@ function App() {
       setAuthedUser,
       theme,
       setTheme,
+      locale,
+      setLocale,
     };
-  }, [authedUser, theme]);
+  }, [authedUser, theme, locale]);
 
   useEffect(() => {
     async function fetchAuthedUser() {
@@ -43,6 +46,10 @@ function App() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    localStorage.setItem('locale', locale);
+  }, [locale]);
 
   return initializing ? (
     <Loader theme={theme} />
