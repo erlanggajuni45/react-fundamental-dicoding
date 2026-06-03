@@ -12,7 +12,7 @@ import Loader from '../components/Loader';
 function HomePageWrapper({ archived }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { theme } = useContext(GlobalContext);
+  const { theme, locale } = useContext(GlobalContext);
 
   const keyword = searchParams.get('keyword');
 
@@ -26,6 +26,7 @@ function HomePageWrapper({ archived }) {
       defaultKeyword={keyword}
       onKeywordChange={changeSearchParams}
       theme={theme}
+      locale={locale}
     />
   );
 }
@@ -86,7 +87,11 @@ class HomePage extends React.Component {
     return (
       <>
         <div>
-          <h2>Catatan {this.props.archived ? 'Arsip' : 'Aktif'}</h2>
+          {this.props.locale === 'id' ? (
+            <h2> Catatan {this.props.archived ? 'Arsip' : 'Aktif'}</h2>
+          ) : (
+            <h2> {this.props.archived ? 'Archived' : 'Active'} Note</h2>
+          )}
           <SearchNote
             onKeywordChange={this.onKeywordChangeEventHandler}
             keyword={this.state.keyword}
@@ -110,6 +115,7 @@ HomePage.propTypes = {
   defaultKeyword: PropTypes.string,
   onKeywordChange: PropTypes.func.isRequired,
   theme: PropTypes.oneOf(['light', 'dark']).isRequired,
+  locale: PropTypes.oneOf(['id', 'en']).isRequired,
 };
 
 export default HomePageWrapper;
