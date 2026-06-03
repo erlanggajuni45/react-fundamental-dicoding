@@ -39,6 +39,10 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
   // TODO: ADD LOADING INDICATOR
   return initializing ? null : (
     <GlobalContext.Provider value={globalContextValue}>

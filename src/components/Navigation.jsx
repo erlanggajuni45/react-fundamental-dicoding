@@ -19,10 +19,6 @@ function Navigation() {
     });
   };
 
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
   return (
     <header>
       <h1>
