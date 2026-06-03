@@ -1,14 +1,38 @@
 import useInput from '../hooks/useInput';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { login, putAccessToken } from '../utils/network-data';
 
 function LoginPage() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useInput('');
   const [password, setPassword] = useInput('');
+
+  const onSubmitEventHandler = async (event) => {
+    event.preventDefault();
+    if (!email.trim() || !password.trim()) {
+      alert('Email dan password harus diisi!');
+      return;
+    }
+
+    const { error, data } = await login({ email, password });
+
+    if (!error) {
+      putAccessToken(data.accessToken);
+      alert('Login berhasil!');
+      navigate('/');
+    } else {
+      alert('Login gagal! Periksa kembali email dan password Anda.');
+    }
+  };
 
   return (
     <>
       <h2>Yuk, login untuk menggunakan aplikasi.</h2>
-      <form className='input-login'>
+      <form
+        className='input-login'
+        onSubmit={onSubmitEventHandler}
+      >
         <label htmlFor='email'>Email</label>
         <input
           type='email'
