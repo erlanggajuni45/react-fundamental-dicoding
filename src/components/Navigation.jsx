@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import GlobalContext from '../context/GlobalContext';
 
 function Navigation() {
-  const { authedUser, setAuthedUser, theme, setTheme } = useContext(GlobalContext);
+  const { authedUser, setAuthedUser, theme, setTheme, setLocale } = useContext(GlobalContext);
 
   const logout = () => {
     localStorage.removeItem('accessToken');
@@ -16,6 +16,14 @@ function Navigation() {
       const newTheme = prevTheme === 'light' ? 'dark' : 'light';
       localStorage.setItem('theme', newTheme);
       return newTheme;
+    });
+  };
+
+  const toggleLocale = () => {
+    setLocale((prevLocale) => {
+      const newLocale = prevLocale === 'id' ? 'en' : 'id';
+      localStorage.setItem('locale', newLocale);
+      return newLocale;
     });
   };
 
@@ -36,7 +44,10 @@ function Navigation() {
             </button>
           </li>
           <li>
-            <button className='toggle-locale'>
+            <button
+              className='toggle-locale'
+              onClick={toggleLocale}
+            >
               <Languages />
             </button>
           </li>

@@ -47,10 +47,6 @@ function App() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  useEffect(() => {
-    localStorage.setItem('locale', locale);
-  }, [locale]);
-
   return initializing ? (
     <Loader theme={theme} />
   ) : (
