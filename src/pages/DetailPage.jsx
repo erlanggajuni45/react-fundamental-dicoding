@@ -11,18 +11,18 @@ function DetailPageWrapper() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  function onDeleteEventHandler() {
-    deleteNote(id);
+  async function onDeleteEventHandler() {
+    await deleteNote(id);
     navigate('/');
   }
 
-  function onArchiveEventHandler() {
-    archiveNote(id);
+  async function onArchiveEventHandler() {
+    await archiveNote(id);
     navigate('/');
   }
 
-  function onUnarchiveEventHandler() {
-    unarchiveNote(id);
+  async function onUnarchiveEventHandler() {
+    await unarchiveNote(id);
     navigate('/');
   }
 
